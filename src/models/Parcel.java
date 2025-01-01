@@ -13,12 +13,15 @@ public class Parcel {
     private double weight;
     private Dimension dimension;
     private String status;
+    private int daysInDepot;
 
     // Parcel Constructor
-    public Parcel(String parcelID, double weight, String status) {
+    public Parcel(String parcelID, double weight, String status, Dimension dimension) {
         this.parcelID = parcelID;
         this.weight = weight;
+        this.dimension = dimension;
         this.status = status;
+        this.daysInDepot = 0;
     }
 
     // Getter and Setter Methods
@@ -53,4 +56,13 @@ public class Parcel {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    public int getDaysInDepot() {
+    return daysInDepot;
+}
+
+    public void incrementDaysInDepot() {
+    this.daysInDepot++;
+}
+
 }
