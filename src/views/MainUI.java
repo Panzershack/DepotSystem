@@ -4,6 +4,10 @@
  */
 package views;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.Timer;
+
 /**
  *
  * @author pasanpitigala
@@ -15,6 +19,7 @@ public class MainUI extends javax.swing.JFrame {
      */
     public MainUI() {
         initComponents();
+        startClock();
     }
 
     /**
@@ -44,10 +49,17 @@ public class MainUI extends javax.swing.JFrame {
         widthTxt = new javax.swing.JTextField();
         heightTxt = new javax.swing.JTextField();
         lengthTxt = new javax.swing.JTextField();
+        saveBtn = new javax.swing.JButton();
+        deleteBtn = new javax.swing.JButton();
         addParcelButton = new javax.swing.JButton();
-        addCustomerButton = new javax.swing.JButton();
         processParcelButton = new javax.swing.JButton();
         dateTimeLbl = new javax.swing.JLabel();
+        editParcelButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        searchParcelTxt = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+        resetButton = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Depot System");
@@ -112,6 +124,10 @@ public class MainUI extends javax.swing.JFrame {
 
         lengthLbl.setText("L:");
 
+        saveBtn.setText("Save");
+
+        deleteBtn.setText("Delete");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -119,30 +135,37 @@ public class MainUI extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(parcelIdLbl)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(weightLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(statusLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(dimensionsLbl))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(parcelIdTxt)
-                        .addComponent(weightTxt)
-                        .addComponent(statusTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(widthLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(widthTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(heightLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(heightTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(saveBtn)
                         .addGap(18, 18, 18)
-                        .addComponent(lengthLbl)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lengthTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(105, Short.MAX_VALUE))
+                        .addComponent(deleteBtn)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(parcelIdLbl)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(weightLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(statusLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(dimensionsLbl))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(parcelIdTxt)
+                            .addComponent(weightTxt)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(widthLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(widthTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(heightLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(heightTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(lengthLbl)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lengthTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(statusTxt))
+                        .addGap(105, 105, 105))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,20 +191,17 @@ public class MainUI extends javax.swing.JFrame {
                     .addComponent(widthTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(heightTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lengthTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(saveBtn)
+                    .addComponent(deleteBtn))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         addParcelButton.setText("Add Parcel");
         addParcelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addParcelButtonActionPerformed(evt);
-            }
-        });
-
-        addCustomerButton.setText("Add Customer");
-        addCustomerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCustomerButtonActionPerformed(evt);
             }
         });
 
@@ -194,31 +214,62 @@ public class MainUI extends javax.swing.JFrame {
 
         dateTimeLbl.setText("DateTime");
 
+        editParcelButton.setText("Edit Parcel");
+
+        jLabel1.setText("Search Parcel:");
+
+        searchButton.setText("Search");
+
+        resetButton.setText("Reset Table");
+
+        jLabel2.setText("Customers Table");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(addParcelButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(processParcelButton))
-                    .addComponent(addCustomerButton)
-                    .addComponent(dateTimeLbl)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 268, Short.MAX_VALUE)
+                .addGap(22, 22, 22)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(addParcelButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(editParcelButton, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(processParcelButton)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(searchParcelTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(resetButton))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(dateTimeLbl, javax.swing.GroupLayout.Alignment.LEADING))
+                .addGap(21, 171, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2))
+                .addGap(19, 19, 19))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(searchParcelTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(searchButton)
+                            .addComponent(resetButton)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -226,16 +277,16 @@ public class MainUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(addParcelButton)
                             .addComponent(processParcelButton))
-                        .addGap(27, 27, 27)
-                        .addComponent(addCustomerButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(editParcelButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(dateTimeLbl)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
+                        .addGap(33, 33, 33)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19))))
+                        .addGap(23, 23, 23))))
         );
 
         pack();
@@ -256,13 +307,34 @@ public class MainUI extends javax.swing.JFrame {
         return addParcelButton;
     }
 
-    public javax.swing.JButton getAddCustomerButton() {
-        return addCustomerButton;
-    }
-
     public javax.swing.JButton getProcessParcelButton() {
         return processParcelButton;
     }
+    
+    public javax.swing.JButton getEditParcelButton() {
+        return editParcelButton;
+    }
+    
+    public javax.swing.JButton getSaveParcelButton() {
+        return saveBtn;
+    }
+    
+    public javax.swing.JButton getDeleteParcelButton() {
+        return deleteBtn;
+    }
+    
+    public javax.swing.JTextField getSearchParcelTxt() {
+        return searchParcelTxt;
+    }
+
+    public javax.swing.JButton getSearchButton() {
+        return searchButton;
+    }
+
+    public javax.swing.JButton getResetButton() {
+        return resetButton;
+    }
+
 
     private void addParcelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addParcelButtonActionPerformed
         System.out.println("Add Parcel button clicked!");
@@ -272,15 +344,44 @@ public class MainUI extends javax.swing.JFrame {
         System.out.println("Process Parcel button clicked!"); 
     }//GEN-LAST:event_processParcelButtonActionPerformed
 
-    private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
-        System.out.println("Add Customer button clicked!");
-    }//GEN-LAST:event_addCustomerButtonActionPerformed
+    // Getter for Parcel ID Text Field
+    public javax.swing.JTextField getParcelIdTxt() {
+        return parcelIdTxt;
+    }
+
+    // Getter for Weight Text Field
+    public javax.swing.JTextField getWeightTxt() {
+        return weightTxt;
+    }
+
+    // Getter for Status Text Field
+    public javax.swing.JTextField getStatusTxt() {
+        return statusTxt;
+    }
+
+    // Getter for Width Text Field
+    public javax.swing.JTextField getWidthTxt() {
+        return widthTxt;
+    }
+
+    // Getter for Height Text Field
+    public javax.swing.JTextField getHeightTxt() {
+        return heightTxt;
+    }
+
+    // Getter for Length Text Field
+    public javax.swing.JTextField getLengthTxt() {
+        return lengthTxt;
+    }
 
 
     public void addActionListener(java.awt.event.ActionListener listener) {
     addParcelButton.addActionListener(listener);
-    addCustomerButton.addActionListener(listener);
     processParcelButton.addActionListener(listener);
+    editParcelButton.addActionListener(listener);
+    saveBtn.addActionListener(listener);
+    deleteBtn.addActionListener(listener);
+    
 }
 
     /**
@@ -318,15 +419,35 @@ public class MainUI extends javax.swing.JFrame {
             }
         });
     }
+    
+
+
+    public void startClock() {
+        // Format for displaying date and time
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        // Create a Timer to update the clock every second
+        Timer timer = new Timer(1000, e -> {
+            String currentTime = formatter.format(new Date());
+            dateTimeLbl.setText(currentTime);
+        });
+
+        // Start the timer
+        timer.start();
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addCustomerButton;
     private javax.swing.JButton addParcelButton;
     private javax.swing.JTable customersTable;
     private javax.swing.JLabel dateTimeLbl;
+    private javax.swing.JButton deleteBtn;
     private javax.swing.JLabel dimensionsLbl;
+    private javax.swing.JButton editParcelButton;
     private javax.swing.JLabel heightLbl;
     private javax.swing.JTextField heightTxt;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -336,6 +457,10 @@ public class MainUI extends javax.swing.JFrame {
     private javax.swing.JTextField parcelIdTxt;
     private javax.swing.JTable parcelsTable;
     private javax.swing.JButton processParcelButton;
+    private javax.swing.JButton resetButton;
+    private javax.swing.JButton saveBtn;
+    private javax.swing.JButton searchButton;
+    private javax.swing.JTextField searchParcelTxt;
     private javax.swing.JLabel statusLbl;
     private javax.swing.JTextField statusTxt;
     private javax.swing.JLabel weightLbl;

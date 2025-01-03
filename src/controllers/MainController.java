@@ -41,7 +41,13 @@ public class MainController {
         // Add action listeners for buttons
         views.getAddParcelButton().addActionListener(e -> handleAddParcel());
         views.getProcessParcelButton().addActionListener(e -> handleProcessParcel());
-        views.getAddCustomerButton().addActionListener(e -> handleAddCustomer());
+        views.getEditParcelButton().addActionListener(e -> handleEditParcel());
+        views.getSaveParcelButton().addActionListener(e -> handleSaveParcel());
+        views.getDeleteParcelButton().addActionListener(e -> handleDeleteParcel());
+        views.getSearchButton().addActionListener(e -> handleSearchParcel());
+        views.getResetButton().addActionListener(e -> handleResetParcelsTable());
+
+
     }
 
     /**
@@ -319,13 +325,147 @@ private void handleProcessParcel() {
     }
 }
 
+private void handleEditParcel() {
+    int selectedRow = views.getParcelsTable().getSelectedRow();
 
-
-    /**
-     * Handles the Add Customer button click event.
-     */
-    private void handleAddCustomer() {
-        System.out.println("Logic for adding customer in Controller");
-        // Add your implementation here
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(views, "Please select a parcel to edit!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
+
+    // Retrieve data from the selected row
+    DefaultTableModel model = (DefaultTableModel) views.getParcelsTable().getModel();
+    String parcelID = model.getValueAt(selectedRow, 0).toString();
+    double weight = Double.parseDouble(model.getValueAt(selectedRow, 1).toString());
+    String dimension = model.getValueAt(selectedRow, 2).toString();
+    String status = model.getValueAt(selectedRow, 3).toString();
+
+    // Split dimension string into parts
+    String[] dimensions = dimension.split("x");
+    double width = Double.parseDouble(dimensions[0]);
+    double height = Double.parseDouble(dimensions[1]);
+    double length = Double.parseDouble(dimensions[2]);
+
+    // Populate form fields
+    views.getParcelIdTxt().setText(parcelID);
+    views.getWeightTxt().setText(String.valueOf(weight));
+    views.getStatusTxt().setText(status);
+    views.getWidthTxt().setText(String.valueOf(width));
+    views.getHeightTxt().setText(String.valueOf(height));
+    views.getLengthTxt().setText(String.valueOf(length));
+}
+
+private void handleSaveParcel() {
+    String parcelID = views.getParcelIdTxt().getText();
+    double weight = Double.parseDouble(views.getWeightTxt().getText());
+    String status = views.getStatusTxt().getText();
+    double width = Double.parseDouble(views.getWidthTxt().getText());
+    double height = Double.parseDouble(views.getHeightTxt().getText());
+    double length = Double.parseDouble(views.getLengthTxt().getText());
+
+    // Confirm the save operation
+    int confirm = JOptionPane.showConfirmDialog(views, "Do you want to save changes?", "Confirm Save", JOptionPane.YES_NO_OPTION);
+    if (confirm == JOptionPane.YES_OPTION) {
+        DefaultTableModel model = (DefaultTableModel) views.getParcelsTable().getModel();
+        int selectedRow = views.getParcelsTable().getSelectedRow();
+
+        // Update the table
+        model.setValueAt(weight, selectedRow, 1);
+        model.setValueAt(width + "x" + height + "x" + length, selectedRow, 2);
+        model.setValueAt(status, selectedRow, 3);
+
+        // Update ParcelMap
+        Parcel parcel = parcelMap.getParcel(parcelID);
+        parcel.setWeight(weight);
+        parcel.setDimension(new Dimension(width, height, length));
+        parcel.setStatus(status);
+
+        // Update the parcels.txt file
+        updateParcelStatusInFile(parcelID, status);
+        JOptionPane.showMessageDialog(views, "Parcel details updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
+}
+
+private void handleDeleteParcel() {
+    int selectedRow = views.getParcelsTable().getSelectedRow();
+
+    if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(views, "Please select a parcel to delete!", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Confirm the delete operation
+    int confirm = JOptionPane.showConfirmDialog(views, "Are you sure you want to delete this parcel?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+    if (confirm == JOptionPane.YES_OPTION) {
+        DefaultTableModel model = (DefaultTableModel) views.getParcelsTable().getModel();
+        String parcelID = model.getValueAt(selectedRow, 0).toString();
+
+        // Remove from table
+        model.removeRow(selectedRow);
+
+        // Remove from ParcelMap
+        parcelMap.removeParcel(parcelID);
+
+        // Update the parcels.txt file
+        updateParcelStatusInFile(parcelID, null); // null to indicate removal
+        JOptionPane.showMessageDialog(views, "Parcel deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
+}
+
+/**
+ * Handles the search functionality for the parcels table by Parcel ID only.
+ */
+private void handleSearchParcel() {
+    String searchText = views.getSearchParcelTxt().getText().trim().toLowerCase();
+
+    if (searchText.isEmpty()) {
+        JOptionPane.showMessageDialog(views, "Please enter a Parcel ID to search.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    DefaultTableModel model = (DefaultTableModel) views.getParcelsTable().getModel();
+    DefaultTableModel tempModel = new DefaultTableModel(new String[]{"Parcel ID", "Weight", "Dimension", "Parcel Status", "Days in Depot"}, 0);
+
+    boolean found = false;
+
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String parcelID = model.getValueAt(i, 0).toString().toLowerCase();
+
+        if (parcelID.contains(searchText)) {
+            tempModel.addRow(new Object[]{
+                model.getValueAt(i, 0), // Parcel ID
+                model.getValueAt(i, 1), // Weight
+                model.getValueAt(i, 2), // Dimension
+                model.getValueAt(i, 3), // Parcel Status
+                model.getValueAt(i, 4)  // Days in Depot
+            });
+            found = true;
+        }
+    }
+
+    if (found) {
+        views.getParcelsTable().setModel(tempModel);
+    } else {
+        JOptionPane.showMessageDialog(views, "No result found. Enter a valid Parcel ID.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+
+
+/**
+ * Resets the parcels table to show all data.
+ */
+private void handleResetParcelsTable() {
+    DefaultTableModel model = (DefaultTableModel) views.getParcelsTable().getModel();
+    model.setRowCount(0); // Clear the table
+    loadAndRenderParcels(); // Reload all data
+}
+
+
+
+
+
+
+  
+    
 }
