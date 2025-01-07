@@ -1,0 +1,4 @@
+[2025-01-07 18:03:40] Application started and UI initialized.
+[2025-01-07 18:03:40] Parcels loaded successfully.
+[2025-01-07 18:03:40] Customers loaded successfully.
+[2025-01-07 18:03:40] Action listeners initialized.

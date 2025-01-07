@@ -6,6 +6,7 @@ import models.ParcelMap;
 import models.QueueOfCustomers;
 import models.Customer;
 import views.MainUI;
+import utils.Log;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -26,13 +27,17 @@ public class MainController {
     private MainUI views;
     private ParcelMap parcelMap;
     private QueueOfCustomers queueOfCustomers;
+    private Log logger; // logger instance
 
     public MainController() {
         // Initialize UI and models
         views = new MainUI();
         parcelMap = new ParcelMap();
         queueOfCustomers = new QueueOfCustomers();
+        logger = Log.getInstance();
         views.setVisible(true);
+        
+        logger.logAction("Application started and UI initialized.");//log application startup
         
         // Load and render data
         loadAndRenderParcels();
@@ -46,6 +51,8 @@ public class MainController {
         views.getDeleteParcelButton().addActionListener(e -> handleDeleteParcel());
         views.getSearchButton().addActionListener(e -> handleSearchParcel());
         views.getResetButton().addActionListener(e -> handleResetParcelsTable());
+        
+        logger.logAction("Action listeners initialized.");//action listener initializations logged
 
 
     }
@@ -89,8 +96,10 @@ public class MainController {
                     System.out.println("Invalid line format: " + line);
                 }
             }
+            logger.logAction("Parcels loaded successfully.");
         } catch (IOException e) {
             e.printStackTrace();
+            logger.logAction("Error loading parcels: " + e.getMessage());
         }
     }
 
@@ -120,8 +129,10 @@ public class MainController {
                     System.out.println("Invalid line format: " + line);
                 }
             }
+            logger.logAction("Customers loaded successfully.");
         } catch (IOException e) {
             e.printStackTrace();
+            logger.logAction("Error loading customers: " + e.getMessage());
         }
     }
     
@@ -240,10 +251,13 @@ private void handleAddParcel() {
 
             // Success message
             JOptionPane.showMessageDialog(views, "Parcel Added to System Awaiting Collection", "Success", JOptionPane.INFORMATION_MESSAGE);
+            logger.logAction("Parcel added: " + parcelID + " for customer: " + customerName);
+            
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(views, "Invalid number format. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
         } catch (Exception ex) {
             ex.printStackTrace();
+            logger.logAction("Error adding parcel: " + ex.getMessage());
             JOptionPane.showMessageDialog(views, "An error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -256,7 +270,9 @@ private void appendToFile(String filename, String content) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
         writer.write(content);
     } catch (IOException e) {
+        logger.logAction("Error appending to file: " + e.getMessage());
         e.printStackTrace();
+        
     }
 }
 
@@ -320,8 +336,8 @@ private void handleProcessParcel() {
         // Update parcels.txt
         updateParcelStatusInFile(parcelID, "Collected");
 
-        // Log collection details (to be implemented later in the Log class)
-        System.out.println("Parcel collected: " + parcelID + ", Fee Paid: £" + totalFee);
+        // Log collection details
+        logger.logAction("Parcel processed: " + parcelID);
     }
 }
 
@@ -353,6 +369,8 @@ private void handleEditParcel() {
     views.getWidthTxt().setText(String.valueOf(width));
     views.getHeightTxt().setText(String.valueOf(height));
     views.getLengthTxt().setText(String.valueOf(length));
+    
+    logger.logAction("Parcel Edit Processed: " + parcelID);
 }
 
 private void handleSaveParcel() {
@@ -383,6 +401,7 @@ private void handleSaveParcel() {
         // Update the parcels.txt file
         updateParcelStatusInFile(parcelID, status);
         JOptionPane.showMessageDialog(views, "Parcel details updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        logger.logAction("Parcel Edited: " + parcelID);
     }
 }
 
@@ -409,6 +428,7 @@ private void handleDeleteParcel() {
         // Update the parcels.txt file
         updateParcelStatusInFile(parcelID, null); // null to indicate removal
         JOptionPane.showMessageDialog(views, "Parcel deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+        logger.logAction("Parcel Deleted: " + parcelID);
     }
 }
 
