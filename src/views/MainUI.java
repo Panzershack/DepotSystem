@@ -7,7 +7,9 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
+/**
+ * Main User Interface for the Depot System.
+ */
 public class MainUI extends JFrame {
     private JTable parcelsTable;
     private JTable customersTable;
@@ -19,24 +21,38 @@ public class MainUI extends JFrame {
         setTitle("Depot System");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1000, 600);
+        setLocationRelativeTo(null); // Centering the window on the screen
         setLayout(new BorderLayout());
 
-        // Top Panel - Date and Time
+        // Top Panel: Date and Time
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         dateTimeLbl = new JLabel("DateTime");
         topPanel.add(dateTimeLbl);
         add(topPanel, BorderLayout.NORTH);
 
-        // Center Panel - Tables
-        JPanel centerPanel = new JPanel(new GridLayout(1, 2));
-        parcelsTable = createTable(new String[]{"Parcel ID", "Weight", "Dimension", "Parcel Status", "Days in Depot"});
-        customersTable = createTable(new String[]{"Sequence Number", "Name", "Parcel ID"});
-        centerPanel.add(new JScrollPane(parcelsTable));
-        centerPanel.add(new JScrollPane(customersTable));
-        add(centerPanel, BorderLayout.CENTER);
+        // Center Panel: Split Pane with Tables
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+        splitPane.setResizeWeight(0.5); // Equal initial size for both tables
+        splitPane.setDividerSize(8);
 
-        // Bottom Panel - Controls
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        parcelsTable = createTable(new String[]{"Parcel ID", "Weight", "Dimension", "Parcel Status", "Days in Depot"});
+        JScrollPane parcelsScrollPane = new JScrollPane(parcelsTable);
+        parcelsScrollPane.setBorder(BorderFactory.createTitledBorder("Parcels"));
+
+        customersTable = createTable(new String[]{"Sequence Number", "Name", "Parcel ID"});
+        JScrollPane customersScrollPane = new JScrollPane(customersTable);
+        customersScrollPane.setBorder(BorderFactory.createTitledBorder("Customers"));
+
+        splitPane.setLeftComponent(parcelsScrollPane);
+        splitPane.setRightComponent(customersScrollPane);
+        add(splitPane, BorderLayout.CENTER);
+
+        // Bottom Panel: Controls
+        JPanel bottomPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
         parcelIdTxt = new JTextField(10);
         weightTxt = new JTextField(10);
         statusTxt = new JTextField(10);
@@ -51,27 +67,58 @@ public class MainUI extends JFrame {
         saveBtn = new JButton("Save");
         deleteBtn = new JButton("Delete");
         searchButton = new JButton("Search");
-        resetButton = new JButton("Reset Table");
+        resetButton = new JButton("Reset");
 
-        bottomPanel.add(new JLabel("Parcel ID:"));
-        bottomPanel.add(parcelIdTxt);
-        bottomPanel.add(new JLabel("Weight:"));
-        bottomPanel.add(weightTxt);
-        bottomPanel.add(new JLabel("Status:"));
-        bottomPanel.add(statusTxt);
-        bottomPanel.add(new JLabel("Dimensions (W x H x L):"));
-        bottomPanel.add(widthTxt);
-        bottomPanel.add(heightTxt);
-        bottomPanel.add(lengthTxt);
-        bottomPanel.add(addParcelButton);
-        bottomPanel.add(processParcelButton);
-        bottomPanel.add(editParcelButton);
-        bottomPanel.add(saveBtn);
-        bottomPanel.add(deleteBtn);
-        bottomPanel.add(new JLabel("Search:"));
-        bottomPanel.add(searchParcelTxt);
-        bottomPanel.add(searchButton);
-        bottomPanel.add(resetButton);
+        // Row 1: Search
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        bottomPanel.add(new JLabel("Search Parcel:"), gbc);
+        gbc.gridx = 1;
+        bottomPanel.add(searchParcelTxt, gbc);
+        gbc.gridx = 2;
+        bottomPanel.add(searchButton, gbc);
+        gbc.gridx = 3;
+        bottomPanel.add(resetButton, gbc);
+
+        // Row 2: Parcel Info
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        bottomPanel.add(new JLabel("Parcel ID:"), gbc);
+        gbc.gridx = 1;
+        bottomPanel.add(parcelIdTxt, gbc);
+        gbc.gridx = 2;
+        bottomPanel.add(new JLabel("Weight:"), gbc);
+        gbc.gridx = 3;
+        bottomPanel.add(weightTxt, gbc);
+
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        bottomPanel.add(new JLabel("Status:"), gbc);
+        gbc.gridx = 1;
+        bottomPanel.add(statusTxt, gbc);
+        gbc.gridx = 2;
+        bottomPanel.add(new JLabel("Dimensions (W x H x L):"), gbc);
+        gbc.gridx = 3;
+        JPanel dimensionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        dimensionPanel.add(widthTxt);
+        dimensionPanel.add(new JLabel(" x "));
+        dimensionPanel.add(heightTxt);
+        dimensionPanel.add(new JLabel(" x "));
+        dimensionPanel.add(lengthTxt);
+        bottomPanel.add(dimensionPanel, gbc);
+
+        // Row 3: Buttons
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        bottomPanel.add(addParcelButton, gbc);
+        gbc.gridx = 1;
+        bottomPanel.add(processParcelButton, gbc);
+        gbc.gridx = 2;
+        bottomPanel.add(editParcelButton, gbc);
+        gbc.gridx = 3;
+        bottomPanel.add(saveBtn, gbc);
+        gbc.gridx = 4;
+        bottomPanel.add(deleteBtn, gbc);
 
         add(bottomPanel, BorderLayout.SOUTH);
 

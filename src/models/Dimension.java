@@ -1,9 +1,7 @@
 package models;
 
-/**
- * Represents the dimensions of a parcel.
- * Includes length, width, and height.
- */
+ //Represents the dimensions of a parcel.
+
 public class Dimension {
     private double length;
     private double width;

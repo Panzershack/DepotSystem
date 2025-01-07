@@ -4,3 +4,4 @@
 4,Bart Simpson,C4
 5,Bart Simpson,X5
 6,Peter Parker,C6
+7,Ben Riley,C7

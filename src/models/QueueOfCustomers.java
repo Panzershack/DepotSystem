@@ -3,10 +3,7 @@ package models;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- * Manages the queue of customers.
- * Provides methods to enqueue, dequeue, and check the queue state.
- */
+  //Manages customers in a Queue data structure, provides methods to enqueue, dequeue, and check the queue state.
 public class QueueOfCustomers {
     private Queue<Customer> queue;
 

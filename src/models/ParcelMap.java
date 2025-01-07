@@ -3,10 +3,9 @@ package models;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Manages parcels using a Map data structure.
- * Provides methods to add, retrieve, and remove parcels.
- */
+
+
+ //Manages Parcels in a tree map data tructure, while providing methods to add, retrieve, and remove parcels.
 public class ParcelMap {
     private Map<String, Parcel> map;
 

@@ -16,3 +16,24 @@
 [2025-01-07 18:43:00] Parcel Edit Processed: X5
 [2025-01-07 18:43:09] Parcel processed: C101
 [2025-01-07 18:43:15] Parcels loaded successfully.
+[2025-01-07 18:46:35] Application started and UI initialized.
+[2025-01-07 18:46:35] Parcels loaded successfully.
+[2025-01-07 18:46:35] Customers loaded successfully.
+[2025-01-07 18:46:35] Action listeners initialized.
+[2025-01-07 18:51:47] Application started and UI initialized.
+[2025-01-07 18:51:47] Parcels loaded successfully.
+[2025-01-07 18:51:47] Customers loaded successfully.
+[2025-01-07 18:51:47] Action listeners initialized.
+[2025-01-07 18:52:10] Parcels loaded successfully.
+[2025-01-07 18:52:14] Parcel Edit Processed: C6
+[2025-01-07 18:52:32] Parcel Edited: C6
+[2025-01-07 18:52:37] Parcel processed: C6
+[2025-01-07 18:53:04] Parcel added: C7 for customer: Ben Riley
+[2025-01-07 18:53:09] Parcel Edit Processed: C7
+[2025-01-07 18:53:16] Parcel processed: C7
+[2025-01-07 18:53:24] Parcel Deleted: C7
+[2025-01-07 18:53:27] Parcels loaded successfully.
+[2025-01-07 19:04:08] Application started and UI initialized.
+[2025-01-07 19:04:08] Parcels loaded successfully.
+[2025-01-07 19:04:08] Customers loaded successfully.
+[2025-01-07 19:04:08] Action listeners initialized.

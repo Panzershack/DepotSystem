@@ -1,9 +1,7 @@
 package models;
 
-/**
- * Represents a customer in the depot system.
- * Each customer has a unique sequence number, a name, and a parcel ID.
- */
+//Represents a customer in the depot system, each customer has a unique sequence number, a name, and a parcel ID.
+
 public class Customer {
     private int seqNum;        // Sequence number in the queue
     private String customerName;  // Customer's name
@@ -45,8 +43,8 @@ public class Customer {
     public void setParcelID(String parcelID) {
         this.parcelID = parcelID;
     }
-
-    // Display customer details as a string (useful for debugging or display)
+    
+    //for debugging (check)
     @Override
     public String toString() {
         return "Customer{" +

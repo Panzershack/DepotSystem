@@ -19,9 +19,8 @@ import java.io.File;
 import java.io.IOException;
 
 
-/**
- * Main controller for handling the Depot System logic.
- */
+//Main Controller for handling all logic
+
 public class Manager {
 
     private MainUI views;
@@ -57,9 +56,8 @@ public class Manager {
 
     }
 
-    /**
-     * Loads parcels from the text file and renders them in the table.
-     */
+    //Loads parcels from the text file and renders them in the table.
+
     private void loadAndRenderParcels() {
         DefaultTableModel model = (DefaultTableModel) views.getParcelsTable().getModel();
         try (BufferedReader reader = new BufferedReader(new FileReader("parcels.txt"))) {
@@ -67,7 +65,7 @@ public class Manager {
             while ((line = reader.readLine()) != null) {
                 System.out.println("Reading line: " + line); // Debug print
                 String[] parts = line.split(",");
-                if (parts.length == 5) { // Ensure correct number of fields
+                if (parts.length == 5) {
                     String parcelID = parts[0];
                     double weight = Double.parseDouble(parts[1]);
                     int daysInDepot = Integer.parseInt(parts[2]);
@@ -91,7 +89,7 @@ public class Manager {
 
                     // Add to the table as a formatted string
                     model.addRow(new Object[]{parcelID, weight, dimensionString, status, daysInDepot});
-                    System.out.println("Added parcel to map and table: " + parcelID); // Debug print
+                    System.out.println("Added parcel to map and table: " + parcelID);
                 } else {
                     System.out.println("Invalid line format: " + line);
                 }
@@ -103,15 +101,14 @@ public class Manager {
         }
     }
 
-    /**
-     * Loads customers from the text file and renders them in the table.
-     */
+
+    //Loads customers from the text file and renders them in the table.
     private void loadAndRenderCustomers() {
         DefaultTableModel model = (DefaultTableModel) views.getCustomersTable().getModel();
         try (BufferedReader reader = new BufferedReader(new FileReader("customers.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                System.out.println("Reading line: " + line); // Debug print
+                System.out.println("Reading line: " + line);
                 String[] parts = line.split(",");
                 if (parts.length == 3) { // Ensure correct number of fields
                     int seqNum = Integer.parseInt(parts[0]);
@@ -124,7 +121,7 @@ public class Manager {
 
                     // Add to the table
                     model.addRow(new Object[]{seqNum, name, parcelID});
-                    System.out.println("Added customer to queue and table: " + name); // Debug print
+                    System.out.println("Added customer to queue and table: " + name);
                 } else {
                     System.out.println("Invalid line format: " + line);
                 }
@@ -136,6 +133,7 @@ public class Manager {
         }
     }
     
+    //allows to update parcel manually
     private void updateParcelStatusInFile(String parcelID, String newStatus) {
     File inputFile = new File("parcels.txt");
     File tempFile = new File("parcels_temp.txt");
@@ -168,9 +166,7 @@ public class Manager {
 }
 
 
-    /**
-     * Handles the Add Parcel button click event.
-     */
+//add parcel event handler
 private void handleAddParcel() {
     // Created input fields
     JTextField customerNameField = new JTextField();
@@ -263,9 +259,7 @@ private void handleAddParcel() {
     }
 }
 
-/**
- * Appends a string to a file.
- */
+//Appends a string to a file. useful when updating text files for parcels, customers
 private void appendToFile(String filename, String content) {
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename, true))) {
         writer.write(content);
@@ -277,9 +271,8 @@ private void appendToFile(String filename, String content) {
 }
 
 
-    /**
-     * Handles the Process Parcel button click event.
-     */
+//Handles the Process Parcel button click event.
+
 private void handleProcessParcel() {
     int selectedRow = views.getParcelsTable().getSelectedRow();
 
@@ -432,9 +425,7 @@ private void handleDeleteParcel() {
     }
 }
 
-/**
- * Handles the search functionality for the parcels table by Parcel ID only.
- */
+//Handles the search functionality for the parcels table by Parcel ID only.
 private void handleSearchParcel() {
     String searchText = views.getSearchParcelTxt().getText().trim().toLowerCase();
 
@@ -472,9 +463,9 @@ private void handleSearchParcel() {
 
 
 
-/**
- * Resets the parcels table to show all data.
- */
+
+//Resets the parcels table to show all data.
+
 private void handleResetParcelsTable() {
     DefaultTableModel model = (DefaultTableModel) views.getParcelsTable().getModel();
     model.setRowCount(0); // Clear the table
