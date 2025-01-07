@@ -2,3 +2,17 @@
 [2025-01-07 18:03:40] Parcels loaded successfully.
 [2025-01-07 18:03:40] Customers loaded successfully.
 [2025-01-07 18:03:40] Action listeners initialized.
+[2025-01-07 18:41:16] Application started and UI initialized.
+[2025-01-07 18:41:16] Parcels loaded successfully.
+[2025-01-07 18:41:16] Customers loaded successfully.
+[2025-01-07 18:41:16] Action listeners initialized.
+[2025-01-07 18:42:11] Application started and UI initialized.
+[2025-01-07 18:42:11] Parcels loaded successfully.
+[2025-01-07 18:42:11] Customers loaded successfully.
+[2025-01-07 18:42:11] Action listeners initialized.
+[2025-01-07 18:42:22] Parcel Edit Processed: C6
+[2025-01-07 18:42:43] Parcel Edited: C6
+[2025-01-07 18:42:51] Parcel Deleted: C6
+[2025-01-07 18:43:00] Parcel Edit Processed: X5
+[2025-01-07 18:43:09] Parcel processed: C101
+[2025-01-07 18:43:15] Parcels loaded successfully.

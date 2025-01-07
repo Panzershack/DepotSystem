@@ -1,15 +1,15 @@
-package depotLauncherApp;
+package worker;
 
-import controllers.MainController;
+import controllers.Manager;
 import utils.Log;
 
 /*
   Entry point for the Parcel Management System application.
  */
-public class Application {
+public class Worker {
     public static void main(String[] args) {
-        // Launches the MainController, which initializes the GUI and handles logic
-        new MainController();
+        // Launches the Manager, which initializes the GUI and handles logic
+        new Manager();
         
         // Added a shutdown hook to close the logger
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {

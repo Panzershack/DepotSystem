@@ -22,14 +22,14 @@ import java.io.IOException;
 /**
  * Main controller for handling the Depot System logic.
  */
-public class MainController {
+public class Manager {
 
     private MainUI views;
     private ParcelMap parcelMap;
     private QueueOfCustomers queueOfCustomers;
     private Log logger; // logger instance
 
-    public MainController() {
+    public Manager() {
         // Initialize UI and models
         views = new MainUI();
         parcelMap = new ParcelMap();

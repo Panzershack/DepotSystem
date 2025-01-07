@@ -1,4 +1,4 @@
-C101,2.5,2,3x2x1,Waiting
+C101,2.5,2,3x2x1,Collected
 C102,5.0,5,4x3x2,Collected
 C103,1.5,0,2x2x1,Collected
 C4,2.00,0,12.0 x 1.0 x 4.0,Collected
